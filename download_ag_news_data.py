@@ -2,7 +2,7 @@ import os
 import shutil
 
 import requests
-from bento import fwdproxy
+from bento import fwdproxy  # Bento required
 
 
 DATA_DIR = "./ag_news_data"
@@ -43,10 +43,10 @@ def _split_csv_into_chunks(csv_path, out_dir, lines_per_file=5000):
 
 # pyre-ignore
 def download_ag_news(base_dir=DATA_DIR, overwrite=False):
+    """Download AG News dataset from GitHub."""
     if overwrite:
         shutil.rmtree(base_dir, ignore_errors=True)
 
-    """Download AG News dataset from GitHub."""
     for split, url in AG_NEWS_URLS.items():
         split_path = os.path.join(base_dir, split)
         os.makedirs(split_path, exist_ok=True)
