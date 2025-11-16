@@ -12,6 +12,8 @@ AG_NEWS_URLS = {
     "test": "https://raw.githubusercontent.com/mhjabreel/CharCnn_Keras/master/data/ag_news_csv/test.csv",
 }
 
+os.makedirs(DATA_DIR, exist_ok=True)
+
 
 def _split_csv_into_chunks(csv_path, out_dir, lines_per_file=5000):
     """Split a CSV file into multiple files, each with up to lines_per_file lines."""
