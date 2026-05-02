@@ -1,3 +1,3 @@
-# Machine Learning
+# DL-Eng: Deep Learning Research & Engineering
 
-This repo is to collect my Python implementations of machine learning engineering.
+`dl-eng` is a modular framework designed to bridge the gap between DL research prototyping and production-ready engineering. This repo is in its early development stage so stay tuned.
