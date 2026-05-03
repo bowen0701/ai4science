@@ -55,17 +55,12 @@ python -m pip install pytest
 ```
 
 ### 1. Run Example Training
-NumPy linear regression:
+NumPy example:
 ```bash
 python examples/linear_regression.py
 ```
 
-NumPy logistic regression:
-```bash
-python examples/logistic_regression.py
-```
-
-PyTorch softmax regression:
+PyTorch example:
 ```bash
 python examples/softmax_regression.py
 ```
@@ -76,14 +71,9 @@ python -m pytest
 ```
 
 ### 3. Prepare Dataset Pipelines
-Prepare AG News shards:
+Eample: Prepare AG News shards:
 ```bash
 python scripts/manage_data.py prepare --dataset ag_news --shards 4 --format csv
-```
-
-Prepare ProteinNet data:
-```bash
-python scripts/manage_data.py prepare --dataset proteinnet --shards 4
 ```
 
 Simulate distributed dataset setup:
@@ -92,11 +82,7 @@ python scripts/manage_data.py test_setup --dataset ag_news --rank 0 --world_size
 ```
 
 ## Notebooks
-The `notebooks/` directory contains exploratory walkthroughs for:
-
-- linear regression
-- PCA / SVD
-- correspondence analysis
+The `notebooks/` directory contains exploratory analysis and modeling walkthroughs.
 
 ## Engineering Standards
 *   **Architecture**: Keep interfaces explicit and backend-specific learner logic isolated.
@@ -106,6 +92,6 @@ The `notebooks/` directory contains exploratory walkthroughs for:
 *   **Typing**: `mypy` is configured with pragmatic defaults for iterative prototyping.
 
 ## Roadmap
-- expand learner coverage beyond the current NumPy / PyTorch examples
+- add more deep learning components, including areas such as transformers, diffusion models, and AI for science
 - add richer experiment configuration and artifact management
 - grow dataset and notebook coverage for more end-to-end workflows
