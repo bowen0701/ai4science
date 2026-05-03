@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "rl-eng"
+name = "dl-eng"
 version = "0.1.0"
-description = "Reinforcement Learning Research and Engineering"
+description = "Deep Learning Research and Engineering"
 requires-python = ">=3.9"
 authors = [{name = "Bowen Lee", email = "bowen0701@gmail.com"}]
 dependencies = [
@@ -16,9 +16,9 @@ dependencies = [
 ]
 
 [tool.setuptools]
-# This tells setuptools to automatically find packages starting with 'rl_eng'
+# This tells setuptools to automatically find packages starting with 'dl_eng'
 [tool.setuptools.packages.find]
-include = ["rl_eng*"]
+include = ["dl_eng*"]
 
 [tool.ruff]
 # Uses a longer line length (127) which is great for complex RL logic
