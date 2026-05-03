@@ -1,10 +1,10 @@
 # DL-Eng: Deep Learning Research & Engineering
 
-`dl-eng` is a modular framework for deep learning research prototyping with an engineering-oriented structure. The goal is to keep model code, learner logic, data pipelines, and interfaces cleanly separated so experiments stay easy to extend and reason about.
+`dl-eng` is a modular framework for deep learning research prototyping with an engineering-oriented structure. It is designed to keep model code, optimization logic, data pipelines, and interfaces cleanly separated so experiments remain easy to extend, test, and adapt across different deep learning workflows and backends.
 
 ---
 
-## Project Architecture
+## 🏗 Project Architecture
 The repository is organized around reusable ML building blocks where models stay focused on forward logic, learners own optimization, and data modules handle preparation and sharding:
 
 ```text
@@ -43,7 +43,7 @@ dl-eng/
        models      interfaces      infra
 ```
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Installation
 ```bash
@@ -71,7 +71,7 @@ python -m pytest
 ```
 
 ### 3. Prepare Dataset Pipelines
-Eample: Prepare AG News shards:
+Example: Prepare AG News shards:
 ```bash
 python scripts/manage_data.py prepare --dataset ag_news --shards 4 --format csv
 ```
@@ -81,17 +81,17 @@ Simulate distributed dataset setup:
 python scripts/manage_data.py test_setup --dataset ag_news --rank 0 --world_size 2
 ```
 
-## Notebooks
+## 📓 Notebooks
 The `notebooks/` directory contains exploratory analysis and modeling walkthroughs.
 
-## Engineering Standards
+## 🛠 Engineering Standards
 *   **Architecture**: Keep interfaces explicit and backend-specific learner logic isolated.
 *   **Examples**: Prefer thin runnable scripts under `examples/` for quick validation.
 *   **Data**: Centralize dataset preparation and sharding in `dl_eng/data/`.
 *   **Linting/Formatting**: Managed via `ruff`.
 *   **Typing**: `mypy` is configured with pragmatic defaults for iterative prototyping.
 
-## Roadmap
+## 🗺 Roadmap
 - add more deep learning components, including areas such as transformers, diffusion models, and AI for science
 - add richer experiment configuration and artifact management
 - grow dataset and notebook coverage for more end-to-end workflows
