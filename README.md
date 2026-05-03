@@ -17,7 +17,6 @@ dl-eng/
 │   ├── infra/                  # logging and support infrastructure
 │   ├── interfaces/             # contracts for models and learners
 │   └── utils/                  # shared helpers
-├── examples/                   # runnable training examples
 ├── scripts/                    # thin orchestration entrypoints
 ├── notebooks/                  # exploratory analysis and demos
 ├── tests/                      # integration coverage
@@ -54,21 +53,13 @@ python -m pip install -e .
 python -m pip install pytest
 ```
 
-### 1. Run Example Training
-NumPy example:
-```bash
-python examples/linear_regression.py
-```
-
-PyTorch example:
-```bash
-python examples/softmax_regression.py
-```
-
-### 2. Run the Test Suite
+### 1. Run the Test Suite
 ```bash
 python -m pytest
 ```
+
+### 2. Explore in Notebooks
+The `notebooks/` directory is the main interactive surface for experimentation and walkthroughs.
 
 ### 3. Prepare Dataset Pipelines
 Example: Prepare AG News shards:
@@ -86,7 +77,7 @@ The `notebooks/` directory contains exploratory analysis and modeling walkthroug
 
 ## 🛠 Engineering Standards
 *   **Architecture**: Keep interfaces explicit and backend-specific learner logic isolated.
-*   **Examples**: Prefer thin runnable scripts under `examples/` for quick validation.
+*   **Workflow**: Use tests for validation and notebooks for interactive experimentation.
 *   **Data**: Centralize dataset preparation and sharding in `dl_eng/data/`.
 *   **Linting/Formatting**: Managed via `ruff`.
 *   **Typing**: `mypy` is configured with pragmatic defaults for iterative prototyping.

@@ -13,6 +13,9 @@ dependencies = [
     "gymnasium",
     "numpy>=1.21.0",
     "PyYAML",
+    "jax>=0.4.23,<0.4.31",
+    "flax>=0.8.4,<0.9.0",
+    "optax>=0.2.2,<0.3.0",
 ]
 
 [tool.setuptools]

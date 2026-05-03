@@ -1,67 +1,82 @@
-from typing import Any, Callable, NamedTuple
+from __future__ import annotations
+
+from typing import Any, Callable
+
 import jax
 import jax.numpy as jnp
+import optax
+from flax import linen as nn
+from flax.training import train_state as flax_train_state
+
 from dl_eng.interfaces.learner_interface import LearnerInterface
 from dl_eng.infra.logger import setup_logger
 
 logger = setup_logger("JaxLearner")
 
-class TrainState(NamedTuple):
-    """Simple state container for JAX training."""
-    params: Any
-    opt_state: Any
-    step: int
 
 class JaxLearner(LearnerInterface):
-    """
-    Generic learner for JAX-based models.
-    
-    In JAX, the learner needs to be stateless or manage state explicitly.
-    This implementation assumes a functional approach where the model
-    and optimizer are provided as pure functions.
-    """
+    """Flax-based learner that keeps JAX training state explicit and immutable."""
 
     def __init__(
         self,
-        model_fn: Callable,
-        loss_fn: Callable,
-        optimizer_update_fn: Callable,
-        state: TrainState
+        state: Any,
+        loss_fn: Callable[[Any, Any], Any],
     ) -> None:
-        self.model_fn = model_fn
-        self.loss_fn = loss_fn
-        self.optimizer_update_fn = optimizer_update_fn
         self.state = state
+        self.loss_fn = loss_fn
+        self._train_step_fn = self._build_train_step_fn()
+        self._val_step_fn = self._build_val_step_fn()
 
-    @property
-    def train_step_fn(self):
-        """Compilable training step."""
-        def step_fn(state, batch):
+    @classmethod
+    def create(
+        cls,
+        model: Any,
+        optimizer: Any,
+        loss_fn: Callable[[Any, Any], Any],
+        rng: Any,
+        sample_input: Any,
+    ) -> "JaxLearner":
+        """Initialize a Flax model and optimizer state from a sample batch."""
+        variables = model.init(rng, sample_input)
+        state = flax_train_state.TrainState.create(
+            apply_fn=model.apply,
+            params=variables["params"],
+            tx=optimizer,
+        )
+        return cls(state=state, loss_fn=loss_fn)
+
+    def _build_train_step_fn(self) -> Callable[[Any, tuple[Any, Any]], tuple[Any, Any]]:
+        loss_fn = self.loss_fn
+
+        @jax.jit
+        def train_step_fn(state: Any, batch: tuple[Any, Any]) -> tuple[Any, Any]:
             x, y = batch
-            
-            def compute_loss(params):
-                y_pred = self.model_fn(params, x)
-                return self.loss_fn(y_pred, y)
-            
-            loss, grads = jax.value_and_grad(compute_loss)(state.params)
-            updates, new_opt_state = self.optimizer_update_fn(grads, state.opt_state, state.params)
-            new_params = jax.tree_util.tree_map(lambda p, u: p + u, state.params, updates)
-            
-            new_state = TrainState(
-                params=new_params,
-                opt_state=new_opt_state,
-                step=state.step + 1
-            )
+
+            def calculate_loss(params: Any) -> Any:
+                predictions = state.apply_fn({"params": params}, x)
+                return loss_fn(predictions, y)
+
+            loss, grads = jax.value_and_grad(calculate_loss)(state.params)
+            new_state = state.apply_gradients(grads=grads)
             return new_state, loss
-        
-        return jax.jit(step_fn)
 
-    def train_step(self, batch: tuple[jnp.ndarray, jnp.ndarray]) -> dict[str, Any]:
-        self.state, loss = self.train_step_fn(self.state, batch)
-        return {"loss": float(loss)}
+        return train_step_fn
 
-    def val_step(self, batch: tuple[jnp.ndarray, jnp.ndarray]) -> dict[str, Any]:
-        x, y = batch
-        y_pred = self.model_fn(self.state.params, x)
-        loss = self.loss_fn(y_pred, y)
-        return {"loss": float(loss)}
+    def _build_val_step_fn(self) -> Callable[[Any, tuple[Any, Any]], Any]:
+        loss_fn = self.loss_fn
+
+        @jax.jit
+        def val_step_fn(state: Any, batch: tuple[Any, Any]) -> Any:
+            x, y = batch
+            predictions = state.apply_fn({"params": state.params}, x)
+            return loss_fn(predictions, y)
+
+        return val_step_fn
+
+    def train_step(self, batch: tuple[Any, Any]) -> dict[str, Any]:
+        self.state, loss = self._train_step_fn(self.state, batch)
+        return {"loss": float(loss), "step": int(self.state.step)}
+
+    def val_step(self, batch: tuple[Any, Any]) -> dict[str, Any]:
+        loss = self._val_step_fn(self.state, batch)
+        return {"loss": float(loss), "step": int(self.state.step)}
