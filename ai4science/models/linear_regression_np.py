@@ -1,24 +1,17 @@
 import numpy as np
-from dl_eng.interfaces.model_interface import ModelInterface
+from ai4science.interfaces.model_interface import ModelInterface
 
-class LogisticRegressionNP:
-    """Numpy implementation of Logistic Regression."""
+class LinearRegressionNP:
+    """Numpy implementation of Linear Regression."""
 
     def __init__(self, input_dim: int) -> None:
         self.input_dim = input_dim
         self.w = np.zeros((self.input_dim, 1))
         self.b = np.zeros((1, 1))
 
-    def _sigmoid(self, logit: np.ndarray) -> np.ndarray:
-        """Sigmoid function with stabilization trick."""
-        logit_max = np.maximum(0, logit)
-        logit_stable = logit - logit_max
-        return np.exp(logit_stable) / (np.exp(-logit_max) + np.exp(logit_stable))
-
     def forward(self, x: np.ndarray) -> np.ndarray:
-        """Logistic regression forward pass (probabilities)."""
-        logit = np.matmul(x, self.w) + self.b
-        return self._sigmoid(logit)
+        """Linear regression forward pass."""
+        return np.matmul(x, self.w) + self.b
 
     def __call__(self, x: np.ndarray) -> np.ndarray:
         return self.forward(x)

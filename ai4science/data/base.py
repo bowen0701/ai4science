@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import Optional, Any
-from dl_eng.infra.logger import setup_logger
+from ai4science.infra.logger import setup_logger
 
 class BaseDataModule(ABC):
     """
-    Abstract base class for all data modules in dl-eng.
+    Abstract base class for all data modules in ai4science.
     
     Inspired by PyTorch Lightning, this class separates:
     - prepare_data: Download, sharded, and save to disk (run once).

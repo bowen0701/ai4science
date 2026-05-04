@@ -2,7 +2,7 @@ from typing import Any, Protocol, runtime_checkable
 
 @runtime_checkable
 class ModelInterface(Protocol):
-    """Protocol defining the standard interface for all models in dl-eng."""
+    """Protocol defining the standard interface for all models in ai4science."""
     
     def forward(self, x: Any) -> Any:
         """Perform a forward pass."""

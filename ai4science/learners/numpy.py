@@ -1,7 +1,7 @@
 import numpy as np
 from typing import Any, Callable
-from dl_eng.interfaces.learner_interface import LearnerInterface
-from dl_eng.infra.logger import setup_logger
+from ai4science.interfaces.learner_interface import LearnerInterface
+from ai4science.infra.logger import setup_logger
 
 logger = setup_logger("SupervisedLearner")
 

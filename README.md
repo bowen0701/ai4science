@@ -1,6 +1,6 @@
-# DL-Eng: Deep Learning Research & Engineering
+# AI4Science: Deep Learning Research & Engineering
 
-`dl-eng` is a modular framework for deep learning research prototyping with an engineering-oriented structure. It is designed to keep model code, optimization logic, data pipelines, and interfaces cleanly separated so experiments remain easy to extend, test, and adapt across different deep learning workflows and backends.
+`ai4science` is a modular framework for deep learning research prototyping with an engineering-oriented structure. It is designed to keep model code, optimization logic, data pipelines, and interfaces cleanly separated so experiments remain easy to extend, test, and adapt across different deep learning workflows and backends.
 
 ---
 
@@ -8,8 +8,8 @@
 The repository is organized around reusable ML building blocks where models stay focused on forward logic, learners own optimization, and data modules handle preparation and sharding:
 
 ```text
-dl-eng/
-├── dl_eng/                     # core Python package
+ai4science/
+├── ai4science/                 # core Python package
 │   ├── data/                   # datasets, sharding, and data modules
 │   │   └── datasets/           # dataset-specific preparation logic
 │   ├── learners/               # optimization loops by backend
@@ -83,7 +83,7 @@ The `notebooks/` directory contains exploratory analysis and modeling walkthroug
 ## 🛠 Engineering Standards
 *   **Architecture**: Keep interfaces explicit and backend-specific learner logic isolated.
 *   **Workflow**: Use tests for validation and notebooks for interactive experimentation.
-*   **Data**: Centralize dataset preparation and sharding in `dl_eng/data/`.
+*   **Data**: Centralize dataset preparation and sharding in `ai4science/data/`.
 *   **Linting/Formatting**: Managed via `ruff`.
 *   **Typing**: `mypy` is configured with pragmatic defaults for iterative prototyping.
 

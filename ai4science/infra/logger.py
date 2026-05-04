@@ -1,7 +1,7 @@
 import logging
 import sys
 
-def setup_logger(name: str = "dl-eng", level: int = logging.INFO) -> logging.Logger:
+def setup_logger(name: str = "ai4science", level: int = logging.INFO) -> logging.Logger:
     """Set up a standard logger for the project."""
     logger = logging.getLogger(name)
     if not logger.handlers:

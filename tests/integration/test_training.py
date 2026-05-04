@@ -8,11 +8,11 @@ import pytest
 from flax import linen as flax_nn
 import optax
 
-from dl_eng.models.linear_regression_np import LinearRegressionNP
-from dl_eng.models.logistic_regression_np import LogisticRegressionNP
-from dl_eng.models.softmax_regression import SoftmaxRegression
-from dl_eng.learners.numpy import NumPyLearner
-from dl_eng.learners.torch import TorchLearner
+from ai4science.models.linear_regression_np import LinearRegressionNP
+from ai4science.models.logistic_regression_np import LogisticRegressionNP
+from ai4science.models.softmax_regression import SoftmaxRegression
+from ai4science.learners.numpy import NumPyLearner
+from ai4science.learners.torch import TorchLearner
 
 
 def test_linear_regression_numpy():
@@ -64,7 +64,7 @@ def test_softmax_regression_torch():
 
 
 def test_linear_regression_jax():
-    from dl_eng.learners.jax import JaxLearner
+    from ai4science.learners.jax import JaxLearner
 
     class LinearModel(flax_nn.Module):
         @flax_nn.compact
