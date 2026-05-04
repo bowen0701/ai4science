@@ -1,6 +1,6 @@
-# AI4Science: Deep Learning Research & Engineering
+# AI4Science: AI for Science Research & Engineering
 
-`ai4science` is a modular framework for deep learning research prototyping with an engineering-oriented structure. It is designed to keep model code, optimization logic, data pipelines, and interfaces cleanly separated so experiments remain easy to extend, test, and adapt across different deep learning workflows and backends.
+`ai4science` is a modular framework for AI for Science research prototyping with an engineering-oriented structure. It is designed to keep model code, optimization logic, data pipelines, and interfaces cleanly separated so experiments remain easy to extend, test, and adapt across different AI for Science workflows and backends.
 
 ---
 
@@ -88,6 +88,6 @@ The `notebooks/` directory contains exploratory analysis and modeling walkthroug
 *   **Typing**: `mypy` is configured with pragmatic defaults for iterative prototyping.
 
 ## 🗺 Roadmap
-- add more deep learning components, including areas such as transformers, diffusion models, and AI for science
+- add more AI for Science components, including areas such as transformers, diffusion models, and AI for science
 - add richer experiment configuration and artifact management
 - grow dataset and notebook coverage for more end-to-end workflows
