@@ -16,10 +16,24 @@ ai4science/
 │       ├── config.yaml
 │       ├── train.py
 │       ├── eval.py
-│       └── notes.md
+│       └── runs/
+│           └── <name>_<yyyymmdd>_<timestamp>_s<seed>_g<git_hash>/
+│               ├── config.yaml
+│               ├── train_metrics.csv
+│               ├── eval_metrics.csv
+│               ├── train_curve.png
+│               ├── eval_curve.png
+│               └── checkpoints/
+├── exports/
+│   └── <project_v0.x>/
+│       ├── config.yaml
+│       ├── export_metadata.yaml
+│       └── checkpoints/
 ├── scripts/
 ├── tests/
 ├── notebooks/
+├── artifacts/
+│   └── data/
 ├── pyproject.toml
 └── README.md
 ```
@@ -33,6 +47,8 @@ ai4science/
 ## Quick Start
 
 ```bash
+git clone git@github.com:bowen0701/ai4science.git
+cd ai4science
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip setuptools wheel

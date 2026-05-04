@@ -9,17 +9,13 @@ dist/
 build/
 
 # ML artifacts
-# models/
-runs/
-artifacts/
-artifacts/checkpoints/*
-!artifacts/checkpoints/.gitkeep
-artifacts/eval_reports/*
-!artifacts/eval_reports/.gitkeep
-artifacts/traces/*
-!artifacts/traces/.gitkeep
-artifacts/apps/*
-!artifacts/apps/.gitkeep
+artifacts/data/
+
+# Experiment run outputs (metrics, curves, checkpoints)
+experiments/*/runs/
+
+# Export checkpoints
+exports/*/checkpoints/
 
 # Venv (common names)
 .venv/
