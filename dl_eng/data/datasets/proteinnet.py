@@ -1,13 +1,23 @@
+"""ProteinNet dataset utilities."""
+
 import os
+import shutil
 import tarfile
 import requests
-from typing import Optional
+from typing import List, Optional
 from dl_eng.data.base import BaseDataModule
 
 class ProteinNetDataModule(BaseDataModule):
     """
     DataModule for ProteinNet CASP11 dataset.
     Handles downloading, extraction, and sharding.
+
+    Usage:
+        from dl_eng.data.datasets.proteinnet import ProteinNetDataModule
+        dm = ProteinNetDataModule(data_dir="./artifacts/data/proteinnet", n_shards=4)
+        dm.prepare_data(force=True)
+        dm.setup(stage="casp11/training_50", rank=0, world_size=2)
+        dm.setup(stage=None, rank=0, world_size=2)
     """
     
     CASP11_URL = "https://sharehost.hms.harvard.edu/sysbio/alquraishi/proteinnet/human_readable/casp11.tar.gz"
@@ -20,10 +30,16 @@ class ProteinNetDataModule(BaseDataModule):
         self.tar_path = os.path.join(self.raw_dir, "casp11.tar.gz")
         self.extracted_dir = os.path.join(self.data_dir, "extracted")
 
-    def prepare_data(self) -> None:
-        """Download and extract ProteinNet data."""
+    def prepare_data(self, force: bool = False) -> None:
+        """Download and extract ProteinNet CASP11 data."""
         os.makedirs(self.raw_dir, exist_ok=True)
-        
+
+        if force:
+            if os.path.exists(self.tar_path):
+                os.remove(self.tar_path)
+            if os.path.exists(self.extracted_dir):
+                shutil.rmtree(self.extracted_dir)
+
         # 1. Download
         if not os.path.exists(self.tar_path):
             self.logger.info("Downloading ProteinNet CASP11 (this may take a while)...")
@@ -41,21 +57,49 @@ class ProteinNetDataModule(BaseDataModule):
                 
         self.logger.info(f"ProteinNet preparation complete in {self.extracted_dir}")
 
+    def _available_stages(self) -> List[str]:
+        if not os.path.exists(self.extracted_dir):
+            return []
+
+        stages = []
+        for root, _, files in os.walk(self.extracted_dir):
+            for filename in files:
+                relative_path = os.path.relpath(os.path.join(root, filename), self.extracted_dir)
+                stages.append(relative_path)
+
+        return sorted(stages)
+
+    def _resolve_stages(self, stage: Optional[str]) -> List[str]:
+        available_stages = self._available_stages()
+        if not available_stages:
+            return []
+
+        if stage is None:
+            return available_stages
+
+        if stage not in available_stages:
+            raise ValueError(
+                f"Unsupported stage '{stage}'. Expected one of {available_stages}."
+            )
+        return [stage]
+
     def setup(self, stage: Optional[str] = None, rank: int = 0, world_size: int = 1) -> None:
-        """Assign files/shards to ranks."""
+        """Assign extracted files to a simulated distributed rank."""
         if not os.path.exists(self.extracted_dir):
             self.logger.error("Data not prepared. Run prepare_data first.")
             return
 
-        # Find all files in the extracted directory
-        all_files = []
-        for root, _, files in os.walk(self.extracted_dir):
-            for f in files:
-                all_files.append(os.path.join(root, f))
-        
-        all_files = sorted(all_files)
-        my_files = all_files[rank::world_size]
-        
-        self.logger.info(f"Rank {rank}/{world_size} assigned {len(my_files)} files.")
-        if len(my_files) > 0:
-            self.logger.info(f"First assigned file: {my_files[0]}")
+        stages = self._resolve_stages(stage)
+        if not stages:
+            self.logger.error("No ProteinNet stages found. Run prepare_data first.")
+            return
+
+        for split in stages:
+            split_path = os.path.join(self.extracted_dir, split)
+            my_files = [split_path][rank::world_size]
+
+            self.logger.info(
+                f"Stage '{split}': rank {rank}/{world_size} assigned {len(my_files)} files."
+            )
+            if my_files:
+                self.logger.info(f"Stage '{split}': first assigned file: {my_files[0]}")

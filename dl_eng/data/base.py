@@ -27,8 +27,8 @@ class BaseDataModule(ABC):
         self.logger = setup_logger(self.__class__.__name__)
 
     @abstractmethod
-    def prepare_data(self) -> None:
-        """Download and shard data. Run once on one process."""
+    def prepare_data(self, force: bool = False) -> None:
+        """Download and shard data. Set force=True to rebuild existing artifacts."""
         pass
 
     @abstractmethod
