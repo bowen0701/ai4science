@@ -62,20 +62,7 @@ python -m pytest
 The `notebooks/` directory is the main interactive surface for experimentation and walkthroughs.
 
 ### 3. Prepare Dataset Pipelines
-Example: Prepare AG News shards:
-```bash
-python scripts/manage_data.py prepare_data --dataset ag_news --shards 4 --format csv
-```
-
-Force a clean rebuild of dataset artifacts:
-```bash
-python scripts/manage_data.py prepare_data --dataset ag_news --shards 4 --format csv --force
-```
-
-Simulate distributed dataset setup:
-```bash
-python scripts/manage_data.py setup --dataset ag_news --stage train --rank 0 --world_size 2
-```
+TODO.
 
 ## 📓 Notebooks
 The `notebooks/` directory contains exploratory analysis and modeling walkthroughs.
