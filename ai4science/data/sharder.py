@@ -2,7 +2,7 @@ import os
 import numpy as np
 import pandas as pd
 from typing import List
-from ai4science.infra.logger import setup_logger
+from ai4science.utils.logging import setup_logger
 
 logger = setup_logger("DataSharder")
 

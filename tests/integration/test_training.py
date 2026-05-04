@@ -11,8 +11,7 @@ import optax
 from ai4science.models.linear_regression_np import LinearRegressionNP
 from ai4science.models.logistic_regression_np import LogisticRegressionNP
 from ai4science.models.softmax_regression import SoftmaxRegression
-from ai4science.learners.numpy import NumPyLearner
-from ai4science.learners.torch import TorchLearner
+from ai4science.learners import DiffusionBatch, DiffusionLearner, NumPyLearner, TorchLearner
 
 
 def test_linear_regression_numpy():
@@ -90,3 +89,28 @@ def test_linear_regression_jax():
 
     assert "loss" in metrics
     assert "step" in metrics
+
+
+def test_diffusion_learner_train_step():
+    class TinyDenoiser(nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+            self.linear = nn.Linear(8, 8)
+
+        def forward(self, noisy_inputs, conditioning=None):
+            if conditioning is not None:
+                noisy_inputs = noisy_inputs + conditioning
+            return self.linear(noisy_inputs)
+
+    model = TinyDenoiser()
+    optimizer = optim.Adam(model.parameters(), lr=0.01)
+    learner = DiffusionLearner(model=model, optimizer=optimizer)
+    batch = DiffusionBatch(
+        noisy_inputs=torch.randn(4, 8),
+        target_noise=torch.randn(4, 8),
+        conditioning=torch.randn(4, 8),
+    )
+
+    metrics = learner.train_step(batch)
+
+    assert "loss" in metrics

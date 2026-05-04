@@ -1,11 +1,13 @@
-import numpy as np
 from typing import Any, Callable
-from ai4science.interfaces.learner_interface import LearnerInterface
-from ai4science.infra.logger import setup_logger
+
+import numpy as np
+
+from ai4science.utils.interfaces import LearnerProtocol
+from ai4science.utils.logging import setup_logger
 
 logger = setup_logger("SupervisedLearner")
 
-class NumPyLearner(LearnerInterface):
+class NumPyLearner(LearnerProtocol):
     """Generic learner for NumPy-based models."""
 
     def __init__(

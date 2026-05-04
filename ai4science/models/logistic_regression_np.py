@@ -1,5 +1,4 @@
 import numpy as np
-from ai4science.interfaces.model_interface import ModelInterface
 
 class LogisticRegressionNP:
     """Numpy implementation of Logistic Regression."""

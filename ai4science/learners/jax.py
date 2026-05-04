@@ -3,18 +3,15 @@ from __future__ import annotations
 from typing import Any, Callable
 
 import jax
-import jax.numpy as jnp
-import optax
-from flax import linen as nn
 from flax.training import train_state as flax_train_state
 
-from ai4science.interfaces.learner_interface import LearnerInterface
-from ai4science.infra.logger import setup_logger
+from ai4science.utils.interfaces import LearnerProtocol
+from ai4science.utils.logging import setup_logger
 
 logger = setup_logger("JaxLearner")
 
 
-class JaxLearner(LearnerInterface):
+class JaxLearner(LearnerProtocol):
     """Flax-based learner that keeps JAX training state explicit and immutable."""
 
     def __init__(

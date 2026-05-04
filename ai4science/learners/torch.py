@@ -1,11 +1,13 @@
-import torch
 from typing import Any, Callable
-from ai4science.interfaces.learner_interface import LearnerInterface
-from ai4science.infra.logger import setup_logger
+
+import torch
+
+from ai4science.utils.interfaces import LearnerProtocol
+from ai4science.utils.logging import setup_logger
 
 logger = setup_logger("TorchLearner")
 
-class TorchLearner(LearnerInterface):
+class TorchLearner(LearnerProtocol):
     """Generic learner for PyTorch-based models.
 
     Usage:

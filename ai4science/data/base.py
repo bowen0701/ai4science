@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Optional, Any
-from ai4science.infra.logger import setup_logger
+from typing import Any, Optional
+
+from ai4science.utils.logging import setup_logger
 
 class BaseDataModule(ABC):
     """
