@@ -6,33 +6,33 @@
 
 ```text
 ai4science/
-├── ai4science/
-│   ├── data/
-│   ├── learners/
-│   ├── models/
-│   └── utils/
-├── experiments/
+├── ai4science/               # Reusable library package
+│   ├── data/                 # BaseDataModule ABC + DataSharder for DDP/FSDP
+│   ├── learners/             # TorchLearner, JaxLearner, NumPyLearner, DiffusionLearner
+│   ├── models/               # Reference model implementations (PyTorch + NumPy)
+│   └── utils/                # LearnerProtocol, ModelProtocol, logging
+├── experiments/              # One subdirectory per research project
 │   └── <project>/
-│       ├── config.yaml
-│       ├── train.py
-│       ├── eval.py
-│       └── runs/
-│           └── <name>_<yyyymmdd>_<timestamp>_s<seed>_g<git_hash>/
-│               ├── config.yaml
+│       ├── config.yaml       # Hyperparameters and paths
+│       ├── train.py          # Training entrypoint
+│       ├── eval.py           # Evaluation / sampling entrypoint
+│       └── runs/             # Git-ignored; auto-created at training time
+│           └── <run_id>/     # e.g., f"{config.name}_{yyyymmdd}_{timestamp}_s{config.seed}_g{git_hash}"
+│               ├── config.yaml         # Snapshot of config used for this run
 │               ├── train_metrics.csv
 │               ├── eval_metrics.csv
 │               ├── train_curve.png
 │               ├── eval_curve.png
-│               └── checkpoints/
-├── exports/
+│               └── checkpoints/        # Saved model weights
+├── exports/                  # Frozen, versioned model releases
 │   └── <project_v0.x>/
 │       ├── config.yaml
 │       ├── export_metadata.yaml
-│       └── checkpoints/
-├── scripts/
-├── tests/
-├── notebooks/
-├── artifacts/
+│       └── checkpoints/      # Git-ignored
+├── scripts/                  # Thin shell wrappers for repeatable runs and ablations
+├── tests/                    # Integration and unit tests
+├── notebooks/                # Exploratory notebooks
+├── artifacts/                # Git-ignored local data cache
 │   └── data/
 ├── pyproject.toml
 └── README.md
