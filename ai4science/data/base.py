@@ -17,13 +17,13 @@ class BaseDataModule(ABC):
                 # Download/shard logic
             def setup(self, rank, world_size):
                 # Load shards based on rank
-        
-        dm = MyDataModule()
+
+        dm = MyDataModule(data_dir="/data/pdbbind")
         dm.prepare_data()
         dm.setup(rank=0, world_size=1)
     """
-    
-    def __init__(self, data_dir: str = "./artifacts/data"):
+
+    def __init__(self, data_dir: str):
         self.data_dir = data_dir
         self.logger = setup_logger(self.__class__.__name__)
 

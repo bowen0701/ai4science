@@ -1,29 +1,31 @@
 # AI4Science
 
-`ai4science` is an AI for Science research and engineering repository organized around a reusable library package and experiment-first workflows.
+`ai4science` is an AI for Science research and engineering monorepo organized around a shared library and independent research projects.
 
 ## Repository Layout
 
 ```text
 ai4science/
-├── ai4science/               # Reusable library package
+├── ai4science/               # Shared library package (pip install -e .)
 │   ├── data/                 # BaseDataModule ABC + DataSharder for DDP/FSDP
 │   ├── learners/             # TorchLearner, JaxLearner, NumPyLearner, DiffusionLearner
 │   ├── models/               # Reference model implementations (PyTorch + NumPy)
-│   └── utils/                # LearnerProtocol, ModelProtocol, logging
-├── experiments/              # One subdirectory per research project
-│   └── <project>/
-│       ├── config.yaml       # Hyperparameters and paths
+│   ├── utils/                # LearnerProtocol, ModelProtocol, logging
+│   ├── geometry/             # 3D geometry: SE(3), equivariance, rotation representations
+│   ├── bio_utils/            # Biological structure utils: PDB/SDF/SMILES parsing
+│   └── plotting/             # Molecular visualization
+├── projects/                 # One subdirectory per research project
+│   └── <project>/            # e.g., affinitydiff_rl
+│       ├── <project>/        # Project package (pip install -e projects/<project>)
+│       │   ├── data.py
+│       │   ├── model.py
+│       │   └── ...
+│       ├── configs/
+│       │   └── config.yaml   # Hyperparameters and paths
 │       ├── train.py          # Training entrypoint
 │       ├── eval.py           # Evaluation / sampling entrypoint
-│       └── runs/             # Git-ignored; auto-created at training time
-│           └── <run_id>/     # e.g., f"{config.name}_{yyyymmdd}_{timestamp}_s{config.seed}_g{git_hash}"
-│               ├── config.yaml         # Snapshot of config used for this run
-│               ├── train_metrics.csv
-│               ├── eval_metrics.csv
-│               ├── train_curve.png
-│               ├── eval_curve.png
-│               └── checkpoints/        # Saved model weights
+│       ├── pyproject.toml
+│       └── README.md
 ├── exports/                  # Frozen, versioned model releases
 │   └── <project_v0.x>/
 │       ├── config.yaml
@@ -32,16 +34,14 @@ ai4science/
 ├── scripts/                  # Thin shell wrappers for repeatable runs and ablations
 ├── tests/                    # Integration and unit tests
 ├── notebooks/                # Exploratory notebooks
-├── artifacts/                # Git-ignored local data cache
-│   └── data/
 ├── pyproject.toml
 └── README.md
 ```
 
 ## Working Model
 
-- `ai4science/` contains reusable code for data pipelines, models, learners, and utilities.
-- `experiments/` contains experiment-local configs and entrypoints.
+- `ai4science/` is the shared library: framework (learners, data, models, utils) and domain utilities (geometry, bio_utils, plotting).
+- `projects/<project>/` is a self-contained research project with its own installable package, configs, and entrypoints.
 - `scripts/` contains thin orchestration commands for repeatable runs and ablations.
 
 ## Quick Start
@@ -56,16 +56,11 @@ python -m pip install -e .
 python -m pip install pytest
 ```
 
-Train the scaffolded experiment:
+To work on a project (e.g., `affinitydiff_rl`):
 
 ```bash
-bash scripts/run_train.sh
-```
-
-Run the sampling pass:
-
-```bash
-python3 -m experiments.<project>.eval
+pip install -e projects/affinitydiff_rl
+python projects/affinitydiff_rl/train.py
 ```
 
 Run tests:

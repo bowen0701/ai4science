@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "affinitydiff-rl"
+version = "0.1.0"
+description = "AffinityDiff-RL: diffusion + RL for protein-ligand binding affinity"
+requires-python = ">=3.9"
+authors = [{name = "Bowen Lee", email = "bowen0701@gmail.com"}]
+dependencies = [
+    "ai4science",
+]
+
+[tool.setuptools.packages.find]
+include = ["affinitydiff_rl*"]
