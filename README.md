@@ -55,9 +55,7 @@ ai4science/
 ## Quick Start
 
 ```bash
-git clone https://github.com/bowen0701/ai4science.git
-cd ai4science
-make install
+git clone https://github.com/bowen0701/ai4science.git && cd ai4science && make install
 source .venv/bin/activate
 ```
 
