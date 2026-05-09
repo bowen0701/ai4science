@@ -55,24 +55,27 @@ ai4science/
 ## Quick Start
 
 ```bash
-git clone git@github.com:bowen0701/ai4science.git
+git clone https://github.com/bowen0701/ai4science.git
 cd ai4science
-python3 -m venv .venv
+make install
 source .venv/bin/activate
-python -m pip install --upgrade pip setuptools wheel
-python -m pip install -e .
-python -m pip install pytest
 ```
 
-To work on a project (e.g., `affinitydiff_rl`):
+`make install` creates `.venv`, installs the shared library, and installs all project packages.
+
+## Makefile Targets
+
+| Target          | Description                          |
+|-----------------|--------------------------------------|
+| `make install`  | Create `.venv` and install all packages |
+| `make test`     | Run test suite                       |
+| `make lint`     | Lint and auto-fix with ruff          |
+| `make format`   | Format with ruff                     |
+| `make typecheck`| Type-check `ai4science/` with mypy   |
+
+## Running a Project
 
 ```bash
-pip install -e projects/affinitydiff_rl
 python projects/affinitydiff_rl/train.py
-```
-
-Run tests:
-
-```bash
-python -m pytest
+python projects/affinitydiff_rl/eval.py
 ```
