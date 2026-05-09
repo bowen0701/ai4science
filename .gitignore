@@ -8,11 +8,8 @@ __pycache__/
 dist/
 build/
 
-# ML artifacts
-artifacts/data/
-
-# Experiment run outputs (metrics, curves, checkpoints)
-experiments/*/runs/
+# Project run outputs (metrics, curves, checkpoints)
+projects/*/runs/
 
 # Export checkpoints
 exports/*/checkpoints/

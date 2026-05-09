@@ -22,6 +22,14 @@ ai4science/
 │       │   └── ...
 │       ├── configs/
 │       │   └── config.yaml   # Hyperparameters and paths
+│       ├── runs/             # Git-ignored; run outputs land here
+│       │   └── <run_id>/     # e.g., {name}_{yyyymmdd}_{timestamp}_s{seed}_g{git_hash}
+│       │       ├── config.yml
+│       │       ├── train_metrics.csv
+│       │       ├── eval_metrics.csv
+│       │       ├── train_curve.png
+│       │       ├── eval_curve.png
+│       │       └── checkpoints/
 │       ├── train.py          # Training entrypoint
 │       ├── eval.py           # Evaluation / sampling entrypoint
 │       ├── pyproject.toml
