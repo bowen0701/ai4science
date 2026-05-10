@@ -10,6 +10,7 @@ requires-python = ">=3.9"
 authors = [{name = "Bowen Lee", email = "bowen0701@gmail.com"}]
 dependencies = [
     "ai4science",
+    "atom3d @ git+https://github.com/drorlab/atom3d.git",
 ]
 
 [tool.setuptools.packages.find]
