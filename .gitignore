@@ -8,6 +8,10 @@ __pycache__/
 dist/
 build/
 
+# Data (downloaded datasets, never committed)
+data/
+projects/*/data/
+
 # Project run outputs (metrics, curves, checkpoints)
 projects/*/runs/
 
