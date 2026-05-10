@@ -20,7 +20,7 @@ wget https://zenodo.org/record/4914718/files/LBA-split-by-sequence-identity-30.t
 tar -xzf LBA-split-by-sequence-identity-30.tar.gz
 
 # You should now have:
-# projects/affinitydiff_rl/data/split-by-sequence-identity-30/
+# projects/affinitydiff_rl/data/split-by-sequence-identity-30/data/
 #   ├── train/data.mdb
 #   ├── val/data.mdb
 #   └── test/data.mdb
@@ -32,7 +32,7 @@ tar -xzf LBA-split-by-sequence-identity-30.tar.gz
 import atom3d.datasets as da
 
 # Load dataset (point to your extracted directory)
-dataset = da.load_dataset('projects/affinitydiff_rl/data/split-by-sequence-identity-30/train', 'lmdb')
+dataset = da.load_dataset('projects/affinitydiff_rl/data/split-by-sequence-identity-30/data/train', 'lmdb')
 
 print(f"✓ Successfully loaded {len(dataset)} training examples")
 # Expected: ✓ Successfully loaded ~3500 training examples
@@ -42,7 +42,7 @@ print(f"✓ Successfully loaded {len(dataset)} training examples")
 
 **Notebook path note**: Paths above assume you run from the repo root. In notebooks under `projects/affinitydiff_rl/notebooks/`, use the relative path:
 ```python
-dataset = da.load_dataset('../data/split-by-sequence-identity-30/train', 'lmdb')
+dataset = da.load_dataset('../data/split-by-sequence-identity-30/data/train', 'lmdb')
 ```
 
 ### Basic Loading
@@ -51,7 +51,7 @@ dataset = da.load_dataset('../data/split-by-sequence-identity-30/train', 'lmdb')
 import atom3d.datasets as da
 
 # Load dataset
-dataset = da.load_dataset('projects/affinitydiff_rl/data/split-by-sequence-identity-30/train', 'lmdb')
+dataset = da.load_dataset('projects/affinitydiff_rl/data/split-by-sequence-identity-30/data/train', 'lmdb')
 
 # Access first entry
 item = dataset[0]
