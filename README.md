@@ -8,12 +8,9 @@
 ai4science/
 ├── ai4science/               # Shared library package (pip install -e .)
 │   ├── data/                 # BaseDataModule ABC + DataSharder for DDP/FSDP
-│   ├── learners/             # TorchLearner, JaxLearner, NumPyLearner, DiffusionLearner
-│   ├── models/               # Reference model implementations (PyTorch + NumPy)
-│   ├── utils/                # LearnerProtocol, ModelProtocol, logging
-│   ├── geometry/             # 3D geometry: SE(3), equivariance, rotation representations
-│   ├── bio_utils/            # Biological structure utils: PDB/SDF/SMILES parsing
-│   └── plotting/             # Molecular visualization
+│   ├── learners/             # Learner
+│   ├── models/               # Reference model implementations
+│   └── utils/                # LearnerProtocol, ModelProtocol, logging
 ├── projects/                 # One subdirectory per research project
 │   └── <project>/            # e.g., affinitydiff_rl
 │       ├── <project>/        # Project package (pip install -e projects/<project>)
@@ -48,7 +45,7 @@ ai4science/
 
 ## Working Model
 
-- `ai4science/` is the shared library: framework (learners, data, models, utils) and domain utilities (geometry, bio_utils, plotting).
+- `ai4science/` is the shared library: framework code for learners, data, models, and utils.
 - `projects/<project>/` is a self-contained research project with its own installable package, configs, and entrypoints.
 - `scripts/` contains thin orchestration commands for repeatable runs and ablations.
 
