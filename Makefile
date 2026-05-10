@@ -1,4 +1,12 @@
-.PHONY: install test lint format typecheck
+.PHONY: help install test lint format typecheck
+
+help:
+	@echo "Available targets:"
+	@echo "  install    Install all packages in editable mode"
+	@echo "  test       Run tests with pytest"
+	@echo "  lint       Run ruff linter with auto-fix"
+	@echo "  format     Run ruff formatter"
+	@echo "  typecheck  Run mypy type checker"
 
 # On Lightning AI Studio, install into the conda base environment.
 # Locally, activate a venv or conda env first — this guard prevents polluting system Python.
