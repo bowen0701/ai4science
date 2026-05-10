@@ -54,12 +54,21 @@ ai4science/
 
 ## Quick Start
 
+**Lightning AI Studio** (conda base env is active by default):
+
 ```bash
 git clone https://github.com/bowen0701/ai4science.git && cd ai4science && make install
-source .venv/bin/activate
 ```
 
-`make install` creates `.venv`, installs the shared library, and installs all project packages.
+**Local development** (activate a venv or conda env first):
+
+```bash
+git clone https://github.com/bowen0701/ai4science.git && cd ai4science
+python3 -m venv .venv && source .venv/bin/activate
+make install
+```
+
+`make install` installs the shared library and all project packages into the active environment.
 
 ## Makefile Targets
 

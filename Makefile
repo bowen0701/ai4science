@@ -1,19 +1,24 @@
 .PHONY: install test lint format typecheck
 
+# On Lightning AI Studio, install into the conda base environment.
+# Locally, activate a venv or conda env first — this guard prevents polluting system Python.
 install:
-	python3 -m venv .venv
-	.venv/bin/pip install --upgrade pip setuptools wheel
-	.venv/bin/pip install -e .
-	.venv/bin/pip install -e projects/affinitydiff_rl
+	@if [ -z "$$VIRTUAL_ENV" ] && [ -z "$$CONDA_DEFAULT_ENV" ]; then \
+		echo "ERROR: No active venv or conda environment detected. Activate one before running make install."; \
+		exit 1; \
+	fi
+	pip install --upgrade pip setuptools wheel
+	pip install -e .
+	pip install -e projects/affinitydiff_rl
 
 test:
-	.venv/bin/python -m pytest
+	python -m pytest
 
 lint:
-	.venv/bin/ruff check --fix .
+	ruff check --fix .
 
 format:
-	.venv/bin/ruff format .
+	ruff format .
 
 typecheck:
-	.venv/bin/mypy ai4science/
+	mypy ai4science/
